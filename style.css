@@ -1,0 +1,100 @@
+:root {
+    --bg-color: #000000;
+    --card-bg: #0a0a0a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0a0;
+    --accent-color: #ffffff;
+    --card-hover: #1a1a1a;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    padding: 3rem 0;
+}
+
+.header-section {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.header-section h1 {
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 0.5rem;
+}
+
+.github-card {
+    background-color: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0; /* Minimalist square corners */
+    padding: 2rem;
+    height: 100%;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-decoration: none;
+    position: relative;
+}
+
+.github-card:hover {
+    transform: scale(1.02);
+    background-color: var(--card-hover);
+    border-color: var(--accent-color);
+    text-decoration: none;
+}
+
+.card-title {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+}
+
+.card-description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.card-footer {
+    display: flex;
+    align-items: center;
+    color: var(--accent-color);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+    background: transparent;
+    padding: 0;
+}
+
+.card-footer i {
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+}

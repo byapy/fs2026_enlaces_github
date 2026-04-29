@@ -1,11 +1,18 @@
 :root {
     --bg-color: #000000;
-    --card-bg: #0a0a0a;
+    --glass-bg: rgba(20, 20, 20, 0.4);
+    --card-bg: rgba(255, 255, 255, 0.03);
     --text-primary: #ffffff;
     --text-secondary: #a0a0a0;
     --accent-color: #ffffff;
-    --card-hover: #1a1a1a;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --card-hover: rgba(255, 255, 255, 0.08);
+    --transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -13,88 +20,313 @@ body {
     color: var(--text-primary);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     min-height: 100vh;
-    padding: 3rem 0;
+    overflow-x: hidden;
+}
+
+.main-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.glass-container {
+    width: 100%;
+    max-width: 1400px;
+    padding: 60px;
+    background-color: var(--glass-bg);
+    background-image: 
+        radial-gradient(rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px),
+        radial-gradient(rgba(255, 255, 255, 0.1) 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 40px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 6px;
+    border-radius: 40px;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        #4b0000 10%,
+        #ff0000 30%,
+        #ff8c00 50%,
+        #ff0000 70%,
+        #4b0000 90%,
+        transparent 100%
+    );
+    background-size: 100% 1000px;
+    background-repeat: repeat-y;
+    background-position: 0 var(--lava-pos, 0px);
+    backdrop-filter: blur(25px) contrast(2.5) saturate(200%);
+    -webkit-backdrop-filter: blur(25px) contrast(2.5) saturate(200%);
+    filter: drop-shadow(0 0 35px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 10px rgba(255, 140, 0, 0.9));
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .header-section {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 60px;
+    transition: opacity 0.5s ease;
 }
 
 .header-section h1 {
     font-weight: 800;
+    font-size: 3.5rem;
     letter-spacing: -0.05em;
     text-transform: uppercase;
     color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    border-bottom: 2px solid var(--accent-color);
-    display: inline-block;
-    padding-bottom: 0.5rem;
+    margin-bottom: 10px;
+}
+
+.controls-container {
+    position: sticky;
+    top: 20px;
+    z-index: 1000;
+    padding: 12px 25px;
+    margin: -20px auto 40px auto;
+    background: rgba(15, 15, 15, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    width: fit-content;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    transition: var(--transition);
+}
+
+.controls-container:hover {
+    background: rgba(25, 25, 25, 0.8);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(2px);
+}
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    width: 100%;
 }
 
 .github-card {
     background-color: var(--card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0; /* Minimalist square corners */
-    padding: 2rem;
-    height: 100%;
-    transition: var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 40px;
+    flex: 1 1 350px; 
+    max-width: calc(33.333% - 20px); 
+    min-height: 300px;
+    transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                opacity 0.6s ease, 
+                filter 0.6s ease,
+                background-color 0.3s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     text-decoration: none;
     position: relative;
+    border-radius: 24px;
+    will-change: transform, opacity;
 }
 
-.github-card:hover {
-    transform: scale(1.02);
-    background-color: var(--card-hover);
-    border-color: var(--accent-color);
-    text-decoration: none;
+/* Shake Animation */
+@keyframes shake {
+    0% { transform: rotate(0.5deg); }
+    50% { transform: rotate(-0.5deg); }
+    100% { transform: rotate(0.5deg); }
+}
+
+/* Fire and Melt Animation */
+@keyframes fireFill {
+    0% { 
+        background-position: 0 100%;
+        opacity: 0;
+    }
+    50% { 
+        opacity: 1;
+    }
+    100% { 
+        background-position: 0 0%;
+        opacity: 1;
+    }
+}
+
+@keyframes melt {
+    0% { transform: scale(1) translateY(0); filter: blur(0); }
+    100% { transform: scale(0.9) translateY(40px); filter: blur(15px) brightness(2) contrast(3); opacity: 0; }
+}
+
+.burning-mode .github-card:not(.burned) {
+    animation: shake 0.15s infinite;
+    border-color: rgba(255, 0, 0, 0.5);
+    cursor: default;
+}
+
+/* Disable links in burning mode */
+.burning-mode .github-card {
+    pointer-events: auto; /* Buttons still need events */
+}
+
+.github-card.burned {
+    pointer-events: none;
+    animation: melt 1.5s forwards ease-in;
+    visibility: hidden;
+    transition: visibility 0s 1.5s; /* Hide after animation */
+}
+
+.github-card.burned::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #ff0000, #ff8c00, #ffff00, transparent);
+    background-size: 100% 300%;
+    border-radius: inherit;
+    z-index: 50;
+    animation: fireFill 1.2s forwards ease-out;
+}
+
+/* Burn UI elements */
+.delete-icon {
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    width: 40px;
+    height: 40px;
+    background: #ff0000;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    cursor: pointer;
+    z-index: 110;
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    transform: scale(0.5);
+}
+
+.burning-mode .delete-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.delete-icon:hover {
+    background: #ffffff;
+    color: #ff0000;
+    transform: scale(1.2) rotate(90deg);
+}
+
+.github-card.flying {
+    box-shadow: 0 0 100px rgba(255, 0, 0, 0.5);
+    border-color: rgba(255, 0, 0, 0.8);
+    background-color: rgba(20, 0, 0, 0.9);
 }
 
 .card-title {
     color: var(--text-primary);
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 0.75rem;
+    margin-bottom: 15px;
     letter-spacing: -0.02em;
 }
 
 .card-description {
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
 }
 
 .card-footer {
     display: flex;
     align-items: center;
     color: var(--accent-color);
-    font-size: 0.8rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.2em;
     border: none;
     background: transparent;
     padding: 0;
 }
 
 .card-footer i {
-    margin-right: 0.75rem;
-    font-size: 1.1rem;
+    margin-right: 12px;
+    font-size: 1.3rem;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
-    padding: 0 1rem;
+@media (max-width: 1200px) {
+    .github-card { max-width: calc(50% - 15px); }
 }
 
 @media (max-width: 768px) {
-    .grid-container {
-        grid-template-columns: 1fr;
-    }
+    .github-card { max-width: 100%; }
+}
+
+.empty-state-container {
+    padding: 100px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    animation: fadeIn 0.8s ease forwards;
+}
+
+.robot-icon {
+    font-size: 8rem;
+    margin-bottom: 20px;
+    color: rgba(255, 255, 255, 0.1);
+    animation: robotFloat 4s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+.empty-title {
+    font-weight: 800;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    letter-spacing: -0.02em;
+}
+
+.empty-description {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 500px;
+}
+
+@keyframes robotFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    33% { transform: translateY(-30px) rotate(5deg); }
+    66% { transform: translateY(-15px) rotate(-5deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
 }

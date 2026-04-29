@@ -12,13 +12,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header class="header-section">
-            <h1>Repositorios GitHub</h1>
-            <p class="text-secondary">Colección de proyectos y ejercicios de Full Stack</p>
-        </header>
+    <div class="main-screen">
+        <div class="glass-container">
+            <div class="controls-container">
+                <button id="burn-mode-btn" class="btn btn-outline-danger me-2">
+                    <i class="bi bi-fire"></i> QUEMAR
+                </button>
+                <button id="recover-btn" class="btn btn-outline-light">
+                    <i class="bi bi-arrow-counterclockwise"></i> RECUPERAR
+                </button>
+            </div>
 
-        <main class="grid-container">
+            <header class="header-section">
+                <h1>Repositorios GitHub</h1>
+                <p class="text-secondary">Colección de proyectos y ejercicios de Full Stack</p>
+            </header>
+
+            <main class="grid-container">
             <a href="https://github.com/byapy/M1-RA2-AAT" class="github-card">
                 <div>
                     <h2 class="card-title">RA2 AAT</h2>
@@ -250,12 +260,23 @@
             </a>
         </main>
 
+        <div id="empty-state" class="empty-state-container" style="display: none;">
+            <div class="robot-icon">
+                <i class="bi bi-robot"></i>
+            </div>
+            <h2 class="empty-title">No hay contenido por ahora</h2>
+            <p class="empty-description">El robot está perdido en el vacío digital. ¡Recupera los enlaces para que vuelva!</p>
+        </div>
+
         <footer class="text-center mt-5 mb-4 text-secondary">
-            <small>&copy; 2024 Bryan Yaquian - Full Stack Development</small>
+            <small>&copy; 2026 Bryan Yaquian - Full Stack Development</small>
         </footer>
     </div>
+</div>
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="script.js"></script>
 </body>
 </html>
